@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/AlbinoSquirrelTracker.iml" filepath="$PROJECT_DIR$/AlbinoSquirrelTracker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AlbinoSquirrelTrackerForAndroid.iml" filepath="$PROJECT_DIR$/AlbinoSquirrelTrackerForAndroid.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

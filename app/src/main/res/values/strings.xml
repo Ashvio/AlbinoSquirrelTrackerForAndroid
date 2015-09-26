@@ -3,4 +3,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_squirrel_map">SquirrelMap</string>
+    <string name="addSquirrelButtonText">Add Squirrel</string>
+    <string name="title">Welcome to Squirrel Tracker!</string>
+    <string name="addSquirrelHintText">description</string>
 </resources>

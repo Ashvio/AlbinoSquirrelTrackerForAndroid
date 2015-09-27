@@ -1,8 +1,11 @@
-<resources>
+<span style = "font=size:x-small;"<resources>
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="android:Theme.Black">
         <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/ColorPrimary</item>
+        <item name="colorPrimaryDark">@color/ColorPrimaryDark</item>
     </style>
 
 </resources>
+</span>

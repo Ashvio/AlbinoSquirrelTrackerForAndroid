@@ -13,7 +13,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -21,11 +20,14 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.parse.FindCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 
 import java.io.ByteArrayOutputStream;
@@ -41,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     //camera
     static final int REQUEST_IMAGE_CAPTURE = 1;
-    private ImageView imageView;
+
 
     //map
     private SupportMapFragment mapFragment;
@@ -57,10 +59,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
 
         Parse.initialize(this, "G2bKUVRQVhuHfKFUFC2gapL6zlQ2C5rBAPhpXhyi", "WJb4v3TFR38xg1zIS0yTRrAwdt7PbTpw2kGdUFBc");
+        Log.d("mainActivity", "close");//fix this?
 
 
         descriptionEditText = (EditText) findViewById(R.id.descriptionEditText);
-        imageView = (ImageView) findViewById(R.id.image);
+
         mapFragment = new SupportMapFragment(){
             @Override
         public void onActivityCreated(Bundle savedInstanceState)
@@ -69,23 +72,54 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 map = mapFragment.getMap();
                 map.setMyLocationEnabled(true);
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(30.284920, -97.733964) , 14.0f) );
+                onMapReady(map, new LatLng(30.28, -97.7));
             }
+
         };
         getSupportFragmentManager().beginTransaction().add(R.id.map, mapFragment).commit();
 
    //     mapView.onCreate(savedInstanceState);
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("location");
 
+        query.findInBackground(new FindCallback<ParseObject>()
+        {
+
+
+            public void done(List<ParseObject> list, ParseException e)
+            {
+                if (e == null) {
+                    int length = list.size();
+                    for (int i = 0; i < length; i++) {
+                        ParseObject p = list.get(i);
+                        Log.d("mainActivity", "PRINT DIS " + p.toString());
+                    }
+                }
+                else
+                {
+                    Log.d("mainActivity", "there was an error");
+                }
+            }
+        });
 
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
     }
 
-    @Override
-    public void onResume()
-    {
-        super.onResume();
-        //kick off parse fetch
+
+
+    //adds map markers
+    public void onMapReady(GoogleMap map, LatLng latLng) {
+        map.addMarker(new MarkerOptions()
+                .position(latLng)
+                .title("Hello world"));
     }
+
+    //public void fetchLocations() {
+      //  ParseQuery<ParseObject> parseQuery = ParseQuery.getQuery("location");
+        //for (int varunisstillwrong = 0; varunisstillwrong < parseQuery.l
+        //parseQuery.getFirstInBackground();
+
+    //}
 
     private void dispatchPictureTakeIntent()
     {
@@ -102,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-            imageView.setImageBitmap(imageBitmap);
+
 
             final ParseObject parseObject = new ParseObject("SquirrelSighting");
             parseObject.put("description", descriptionEditText.getText().toString());

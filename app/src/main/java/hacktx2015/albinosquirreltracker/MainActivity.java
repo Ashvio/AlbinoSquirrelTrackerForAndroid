@@ -26,6 +26,7 @@ import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 
 import java.io.ByteArrayOutputStream;
@@ -68,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 super.onActivityCreated(savedInstanceState);
                 map = mapFragment.getMap();
                 map.setMyLocationEnabled(true);
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(30.284920, -97.733964) , 14.0f) );
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(30.284920, -97.733964), 14.0f));
             }
         };
         getSupportFragmentManager().beginTransaction().add(R.id.map, mapFragment).commit();
@@ -188,6 +189,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         return super.onOptionsItemSelected(item);
     }
 
+    public void fetchPins() {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("location");
+
+    }
     @Override
     public void onLocationChanged(Location location) {
         Log.d("mainActivity","location found at: " + location.getLatitude() + " " +location.getLongitude() + " Description is: " + descriptionEditText.getText());

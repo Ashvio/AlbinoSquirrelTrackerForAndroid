@@ -5,7 +5,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
     android:orientation="vertical"
-    android:background="#CF5300"
+
     >
 
     <TextView android:text="@string/title" android:layout_width="wrap_content"
@@ -25,10 +25,7 @@
         android:layout_width="fill_parent"
         android:layout_height="40dp" />
 
-    <ImageView
-        android:layout_width="fill_parent"
-        android:layout_height="120dp"
-        android:id="@+id/image"/>
+
 
 
     <fragment
@@ -36,6 +33,6 @@
         xmlns:map="http://schemas.android.com/apk/res-auto"
         android:id="@+id/map"
         android:layout_width="match_parent"
-        android:layout_height="200dp" />
+        android:layout_height="500dp" />
 
 </LinearLayout>

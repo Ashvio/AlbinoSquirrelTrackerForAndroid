@@ -21,6 +21,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -68,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 super.onActivityCreated(savedInstanceState);
                 map = mapFragment.getMap();
                 map.setMyLocationEnabled(true);
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(30.2861, 97.7394) , 14.0f) );
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(30.284920, -97.733964) , 14.0f) );
             }
         };
         getSupportFragmentManager().beginTransaction().add(R.id.map, mapFragment).commit();
@@ -102,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-            imageView.setImageBitmap(imageBitmap);
+       //     imageView.setImageBitmap(imageBitmap);
 
             final ParseObject parseObject = new ParseObject("SquirrelSighting");
             parseObject.put("description", descriptionEditText.getText().toString());
@@ -115,28 +116,22 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             imageFile.saveInBackground(new SaveCallback() {
                 @Override
                 public void done(ParseException e) {
-                    if (e==null)
-                    {
+                    if (e == null) {
                         parseObject.put("image", imageFile);
 
                         parseObject.saveInBackground(new SaveCallback() {
                             @Override
                             public void done(ParseException e) {
-                                if (e!=null)
-                                {
+                                if (e != null) {
                                     Toast.makeText(MainActivity.this, "failed", Toast.LENGTH_LONG).show();
 
-                                }
-                                else
-                                {
+                                } else {
                                     Toast.makeText(MainActivity.this, "save success", Toast.LENGTH_LONG).show();
 
                                 }
                             }
                         });
-                    }
-                    else
-                    {
+                    } else {
                         Toast.makeText(MainActivity.this, "failed", Toast.LENGTH_LONG).show();
 
                     }
@@ -172,6 +167,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
+       public void onMaoReady(GoogleMap map){
+        map.addMarker( new MarkerOptions().position(new LatLng(location.getLatitude(),location.getLongitude())));
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

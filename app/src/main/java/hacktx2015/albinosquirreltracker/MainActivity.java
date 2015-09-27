@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 super.onActivityCreated(savedInstanceState);
                 map = mapFragment.getMap();
                 map.setMyLocationEnabled(true);
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(30.2861, -97.7394) , 14.0f) );
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(30.284920, -97.733964) , 14.0f) );
             }
         };
         getSupportFragmentManager().beginTransaction().add(R.id.map, mapFragment).commit();
